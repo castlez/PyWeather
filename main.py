@@ -19,11 +19,11 @@ import tkinter as tk
 class WeatherGUI():
     def __init__(self, master):
         place = "portland, or" # this will eventually be automatic (or maybe a selector)
-
+        place = str(input("enter a place (<city>,<space><state abbreviation>) > "))
         # build the url
         baseurl = "https://query.yahooapis.com/v1/public/yql?"
         yql_query = "select * from weather.forecast \
-                     where woeid in (select woeid from geo.places(1) where text=\"portland, or\")"
+                     where woeid in (select woeid from geo.places(1) where text=\""+place+"\")"
         yql_url = baseurl + parse.urlencode({'q': yql_query}) + "&format=json"
 
         items = []
@@ -33,6 +33,7 @@ class WeatherGUI():
         forecast = data['query']['results']['channel']['item']['forecast']
 
         # present results
+        items.append(tk.Label(master, text="Weather for " + place.title() + "\n"))
         for day in forecast[:5]:
             st = day['day'] + ", " + day['date'] + \
                      "\nHigh: " + str(day['high']) + \
@@ -45,5 +46,6 @@ class WeatherGUI():
 # run
 if __name__ == '__main__':
     root = tk.Tk()
+    root.title("PyWeather")
     my_gui = WeatherGUI(root)
     root.mainloop()
