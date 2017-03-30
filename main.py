@@ -18,7 +18,6 @@ import tkinter as tk
 # execute query and present results
 class WeatherGUI():
     def __init__(self, master):
-        place = "portland, or" # this will eventually be automatic (or maybe a selector)
         place = str(input("enter a place (<city>,<space><state abbreviation>) > "))
         # build the url
         baseurl = "https://query.yahooapis.com/v1/public/yql?"
